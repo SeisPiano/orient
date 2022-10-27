@@ -20,5 +20,5 @@ Liu Dan, Yang Ting, Le Ba Manh, Wu Yuechu, Wang Yizhi, Huang Xinfeng, Du Haoran,
 
 #### Example results
 
-<div align=center><img src="https://img-blog.csdnimg.cn/d69fefb0576b4c34ba1b6cf7cc012a91.png#pic_center" width="600"/></div>
-<div align=center><img src="https://img-blog.csdnimg.cn/a00b6340c475483095b7c2080a455d5c.png#pic_center" width="600"/></div>
+<div align=center><img src="FIGURES/nor.png" width="600"/></div>
+<div align=center><img src="FIGURES/ros.png" width="600"/></div>
