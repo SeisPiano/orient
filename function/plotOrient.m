@@ -5,9 +5,7 @@ function plotOrient(mincorr,outfile,pdffile1,pdffile2,nbins)
 % Updated 2022-10-26
 % Yuechu Wu
 % 12131066@mail.sustech.edu.cn
-if nargin == 4
-    nbins = 36;
-end
+
 outdata = load(outfile);
 
 % merge corr and x of two normalized cross correlation
@@ -63,8 +61,11 @@ figure(2)
 % quiver(0,0,x_ori,y_ori,'r','LineWidth',2);
 % view(90,-90);
 %%%%% original version %%%%%
-
-h = polarhistogram(deg2rad(data(ic,2)),nbins); % specify number of bins for polar histogram
+if nargin == 4
+    h = polarhistogram(deg2rad(data(ic,2))); % specify number of bins for polar histogram
+else
+    h = polarhistogram(deg2rad(data(ic,2)),nbins); % specify number of bins for polar histogram
+end
 hold on;
 polarplotarrow(meanOri,max(h.Values)); % (~,~,arrowhead_angle,arrowhead_scale)
 
