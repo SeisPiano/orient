@@ -1,11 +1,13 @@
-function plotOrient(mincorr,outfile,pdffile1,pdffile2)
+function plotOrient(mincorr,outfile,pdffile1,pdffile2,nbins)
 % original version was written by Dr. Ba Manh Le.
 %
 % -- use polarhistogram instead of rose.
 % Updated 2022-10-26
 % Yuechu Wu
 % 12131066@mail.sustech.edu.cn
-
+if nargin == 4
+    nbins = 36;
+end
 outdata = load(outfile);
 
 % merge corr and x of two normalized cross correlation
@@ -35,13 +37,13 @@ figure(1);
 subplot(2,1,1)
 plot(data(:,1),data(:,2),'o','MarkerEdgeColor','k','MarkerFaceColor','b',...
     'Linewidth',1.0,'MarkerSize',6); hold on; 
-% plot([mincorr mincorr],[meanOri_coarse-180 meanOri_coarse+180],'r','Linewidth',2);
-plot([mincorr mincorr],[0 360],'r','Linewidth',2);
+plot([mincorr mincorr],[meanOri_coarse-180 meanOri_coarse+180],'r','Linewidth',2);
+% plot([mincorr mincorr],[0 360],'r','Linewidth',2);
 title(['Orientation = ',num2str(meanOri,'%.1f;'),'  Std = ',num2str(stdOri,'%.1f')],'FontSize',12)
 
 set(gca,'FontSize',10,'XTick',0:0.2:1);
-% set(gca,'xlim',[0 1], 'ylim',[meanOri_coarse-180 meanOri_coarse+180]);
-set(gca,'xlim',[0 1], 'ylim',[0 360],'YTick',0:120:360);
+set(gca,'xlim',[0 1], 'ylim',[meanOri_coarse-180 meanOri_coarse+180]);
+% set(gca,'xlim',[0 1], 'ylim',[0 360],'YTick',0:120:360);
 print('-dpdf',pdffile1)
 
 
@@ -62,7 +64,8 @@ figure(2)
 % view(90,-90);
 %%%%% original version %%%%%
 
-h = polarhistogram(deg2rad(data(ic,2))); hold on
+h = polarhistogram(deg2rad(data(ic,2)),nbins); % specify number of bins for polar histogram
+hold on;
 polarplotarrow(meanOri,max(h.Values)); % (~,~,arrowhead_angle,arrowhead_scale)
 
 % or just plot the straight line without arrow head
