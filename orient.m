@@ -34,12 +34,14 @@ che = 'HH1'; % E-W component channel name
 
 bpass = [0.015, 0.025, 0.035, 0.045];  % frequency used to calculate
 dbp = 0.005;  % the band for each frequency bpass +/- dbp
-minsnr = 10;  % signal to noise ratio threshold
-velocity = [3, 4.5]; % lower and upper limits of Rayleigh wave velocity
-mincorr = 0.8;  % minimum cross correlation use to pick the result
 tap_width = 0.1; % width in percent of frequency vector of cosine taper
+velocity = [3, 4.5]; % lower and upper limits of Rayleigh wave velocity
+
+mincorr = 0.8;  % minimum cross correlation use to pick the result
 snr_op = 2; % options for using SNR calculations: (1) sqrt(∑signal^2/∑noise^2) 
                                                 % (2) max(abs(signal)/mean(abs(noise))
+minsnr = 10;  % signal to noise ratio threshold
+isoverwrite = 0; % % overwrite output files
 
 % END OF USER INPUT %
 if ~exist(OUTPUTdir,'dir')
@@ -64,6 +66,10 @@ filesuff = sprintf('*%s*%s',chz,ext); % change this for matching with file name 
 
 for ista = 1:length(stations) % begin station loop
     station = stations{ista};
+    outfile = sprintf('%s/%s.%s.txt',outpath,network,station);
+
+    if isoverwrite == 1
+
     close all; clear outdata ide;
     filenames = dir(sprintf('%s/%s/%s/%s',INPUTdir,network,station,filesuff));
     outdata=[];
@@ -151,8 +157,9 @@ for ista = 1:length(stations) % begin station loop
 
     end % end frequency loop
 
-    outfile = sprintf('%s/%s.%s.txt',outpath,network,station);
+    
     save(outfile,'outdata','-ascii');
+    end
     pdffile1 = sprintf('%s/%s.%s.nor.pdf',figoutpath,network,station);
     pdffile2 = sprintf('%s/%s.%s.ros.pdf',figoutpath,network,station);
     plotOrient(mincorr,outfile,pdffile1,pdffile2);
