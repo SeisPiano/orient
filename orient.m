@@ -3,7 +3,7 @@
 % 
 % original version was written by Dr. Ba Manh Le.
 % The input earthquake events must include the information of epicenter
-% distance and azimuth in SAC header variables.
+% distance and back azimuth in SAC header variables.
 %
 % -- handle multiple stations;
 % -- simplify multiple steps into functions;
