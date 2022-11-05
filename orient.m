@@ -41,7 +41,7 @@ mincorr = 0.8;  % minimum cross correlation use to pick the result
 snr_op = 2; % options for using SNR calculations: (1) sqrt(∑signal^2/∑noise^2) 
                                                 % (2) max(abs(signal)/mean(abs(noise))
 minsnr = 10;  % signal to noise ratio threshold
-isoverwrite = 0; % % overwrite output files
+isoverwrite = 1; % % overwrite output files
 
 % END OF USER INPUT %
 if ~exist(OUTPUTdir,'dir')
@@ -87,7 +87,7 @@ for ista = 1:length(stations) % begin station loop
 
                 fprintf('loading %s\n',filenamez);
                 rawdataz = rsac(filenamez);
-                [otimez,btimez,dist,baz,az,dt] = lh(rawdataz,'O','B','DIST','BAZ','AZ','DELTA');
+                [otimez,btimez,dist,baz,dt] = lh(rawdataz,'O','B','DIST','BAZ','DELTA');
                 dataz = datapreproc(rawdataz(:,2),dt,[lowfreq,higfreq],tap_width);
 
                 if snr_op == 1
@@ -102,13 +102,13 @@ for ista = 1:length(stations) % begin station loop
 
                 fprintf('loading %s\n',filenamen);
                 rawdatan = rsac(filenamen);
-                [otimen,btimen,~,~,~,dt] = lh(rawdatan,'O','B','DIST','BAZ','AZ','DELTA');
+                [otimen,btimen,~,~,dt] = lh(rawdatan,'O','B','DIST','BAZ','DELTA');
                 datan = datapreproc(rawdatan(:,2),dt,[lowfreq,higfreq],tap_width);
 %                 snrn = calsnr(datan,otimen,btimen,dist,dt);
 
                 fprintf('loading %s\n',filenamee);
                 rawdatae = rsac(filenamee);
-                [otimee,btimee,~,~,~,dt] = lh(rawdatae,'O','B','DIST','BAZ','AZ','DELTA');
+                [otimee,btimee,~,~,dt] = lh(rawdatae,'O','B','DIST','BAZ','DELTA');
                 datae = datapreproc(rawdatae(:,2),dt,[lowfreq,higfreq],tap_width);
 %                 snre = calsnr(datae,otimee,btimee,dist,dt);
 
