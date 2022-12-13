@@ -66,7 +66,7 @@ filesuff = sprintf('*%s*%s',bhz,ext); % change this for matching with file name 
 
 for ista = 1:length(stations) % begin station loop
     station = stations{ista};
-    outfile = sprintf('%s/%s_%s_txt',outpath,network,station);
+    outfile = sprintf('%s/%s_%s_orient.txt',outpath,network,station);
 
     if isoverwrite
 
