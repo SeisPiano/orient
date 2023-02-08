@@ -22,7 +22,7 @@ network = 'XF'; % network name
 stations = {'B02'}; % station names
 ext = 'sac.disp';  % name of the extension
 
-INPUTdir = 'DATA'; % directory for data input
+INPUTdir = 'DATA/EVENT'; % directory for data input
 OUTPUTdir = 'DATA/ORIENT'; % directory for data output
 FIGUREdir = 'FIGURES'; % directory for figure output
 
@@ -68,14 +68,15 @@ for ista = 1:length(stations) % begin station loop
     station = stations{ista};
     outfile = sprintf('%s/%s_%s_orient.txt',outpath,network,station);
 
-    if isoverwrite
+    if ~exist(outfile,'file') || isoverwrite
 
         close all; clear outdata iee;
-        filenames = dir(sprintf('%s/%s/%s/%s',INPUTdir,network,station,filesuff));
+
         iee = 0; % effective event
 
         for ifreq = 1:length(bpass) % begin frequency loop
             lowfreq = bpass(ifreq)-dbp; higfreq = bpass(ifreq)+dbp;
+            filenames = dir(sprintf('%s/%s/%s/%s',INPUTdir,network,station,filesuff));
 
             for ie = 1:length(filenames)  % begin event loop
                 filename_z = sprintf('%s/%s/%s',inpath,station,filenames(ie).name);
@@ -86,9 +87,7 @@ for ista = 1:length(stations) % begin station loop
 
                     fprintf('loading %s\n',filename_z);
                     rawdata_z = rsac(filename_z);
-                    if sum(isnan(rawdata_z(:,2)))
-                        continue
-                    end
+
                     [otime_z,btime_z,dist,baz,dt] = lh(rawdata_z,'O','B','DIST','BAZ','DELTA');
                     data_z = datapreproc(rawdata_z(:,2),dt,[lowfreq,higfreq],tap_width);
 
@@ -122,7 +121,7 @@ for ista = 1:length(stations) % begin station loop
                             continue
                         end
                         % only use events with similar amplitude magnitude
-                        if sum(sig_z.^2)/sum(sig_n.^2) >= 0.9 && sum(sig_z.^2)/sum(sig_e.^2) >= 0.9
+                        if sum(sig_z.^2)/sum(sig_n.^2) >= 0.8 && sum(sig_z.^2)/sum(sig_e.^2) >= 0.8
                             sig_z=sig_z/max(sig_z);
                             sig_n=sig_n/max(sig_n);
                             sig_e=sig_e/max(sig_e);
@@ -156,21 +155,20 @@ for ista = 1:length(stations) % begin station loop
 
         save(outfile,'outdata','-ascii');
 
-    else
-        if ~exist(outfile,'file')
-            error('%s %s\n',outfile,'does not exist! Please change overwrite to 1');
-        end
 
     end % end overwrite
 
 
-
-    plotOrient(mincorr,outfile,network,station); % network and station are not necessary
+    plotOrient(outfile,mincorr,network,station); % network and station are not necessary
 
     figure(1)
-    pdffile1 = sprintf('%s/%s_%s_nor.pdf',figoutpath,network,station);
+    set(gcf,'PaperPositionMode','manual');
+    set(gcf,'PaperUnits','inches');
+    set(gcf,'PaperOrientation','portrait');
+    set(gcf,'PaperPosition',[.05 1.5 8 5]);
     xlabel('Coherence');
-    ylabel('Degrees from north');
+    ylabel('Degrees from N'); % N component
+    pdffile1 = sprintf('%s/%s_%s_nor.pdf',figoutpath,network,station);
     print('-dpdf',pdffile1);
 
     figure(2)
