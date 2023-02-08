@@ -1,4 +1,4 @@
-function plotOrient(mincorr,outfile,network,station)
+function plotOrient(outfile,mincorr,network,station)
 % original version was written by Dr. Ba Manh Le.
 %
 % -- use polarhistogram instead of rose.
@@ -31,7 +31,7 @@ end
 
 stdOri_coarse = std(xs); % standard deviation of coarse orientation
 
-ii=find(xs < meanOri_coarse+stdOri_coarse & xs > meanOri_coarse-stdOri_coarse);
+ii = find(xs < meanOri_coarse+stdOri_coarse & xs > meanOri_coarse-stdOri_coarse);
 meanOri = mean(xs(ii)); % average value of optimized orientation
 stdOri  = std(xs(ii));  % standard deviation of optimized orientation
 
@@ -40,12 +40,12 @@ figure(1);
 subplot(2,1,1)
 plot(data(:,1),data(:,2),'o','MarkerFaceColor','#beb8dc','MarkerEdgeColor','none','MarkerSize',4);
 hold on;
-plot(corr(ii),xs(ii),'o','MarkerFaceColor','#14517c','MarkerEdgeColor','none','MarkerSize',3);
+plot(corrs(ii),xs(ii),'o','MarkerFaceColor','#14517c','MarkerEdgeColor','none','MarkerSize',3);
 
 % plot([mincorr mincorr],[0 360],'r','Linewidth',1.5);
 plot([mincorr mincorr],[meanOri_coarse-180 meanOri_coarse+180],'Color','#d8383a','Linewidth',1.5);
 legend({'All','Used',''},'Location','northwest');
-title([network,' ',station,' Orientation = ',num2str(meanOri,'%.1f'),'  std = ',num2str(stdOri,'%.1f')],'FontSize',10)
+title([network,' ',station,' Orientation = ',num2str(meanOri,'%.1f'),'  std = ',num2str(stdOri,'%.1f')])
 
 set(gca,'FontSize',10,'XTick',0:0.2:1);
 set(gca,'xlim',[0 1], 'ylim',[meanOri_coarse-180 meanOri_coarse+180]);
