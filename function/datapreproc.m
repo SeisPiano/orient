@@ -8,6 +8,8 @@ function preproc_data = datapreproc(raw_data,dt,filtfreq,tap_width)
 % 12131066@mail.sustech.edu.cn
 % 2022-09-29
 
+raw_data(isnan(raw_data)) = 0;
+
 rmean_data = raw_data - mean(raw_data);
 rtrend_data = detrend(rmean_data);
 filt_data = bpfilt(rtrend_data,dt,filtfreq(1),filtfreq(2));
