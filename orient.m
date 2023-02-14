@@ -39,7 +39,7 @@ velocity = [3, 4.5]; % lower and upper limits of Rayleigh wave velocity
 
 mincorr = 0.8;  % minimum cross correlation use to pick the result
 snr_op = 2; % options for using SNR calculations: (1) sqrt(∑signal^2/∑noise^2)
-                                                % (2) max(abs(signal)/mean(abs(noise))
+%                                                 (2) max(abs(signal)/mean(abs(noise))
 minsnr = 3;  % signal to noise ratio threshold
 isoverwrite = 1; % overwrite output files
 
@@ -167,7 +167,7 @@ for ista = 1:length(stations) % begin station loop
     set(gcf,'PaperOrientation','portrait');
     set(gcf,'PaperPosition',[.05 1.5 8 5]);
     xlabel('Coherence');
-    ylabel('Degrees from N'); % N component
+    ylabel('Degrees from N'); % Degrees from the direction of N component
     pdffile1 = sprintf('%s/%s_%s_nor.pdf',figoutpath,network,station);
     print('-dpdf',pdffile1);
 
