@@ -2,11 +2,15 @@
 
 The `orient` is a package written in MATLAB, developed for determining the orientation of ocean bottom seismograph (OBS) via Rayleigh-wave polarization.
 
-We determine the orientation based on the method of [Stachnik et al. (2012)](https://doi.org/10.1785/0220110128). 
+This package calculate the orientation based on the method of [Stachnik et al. (2012)](https://doi.org/10.1785/0220110128). 
 
 ### Authors 
 
-[`Le Ba Manh`](https://github.com/bamanhle) & [`Yuechu Wu`](https://github.com/SeisPiano)
+[`Ba Manh Le`](https://github.com/bamanhle) & [`Yuechu Wu`](https://github.com/SeisPiano)
+
+### Data
+- Public seismic data can be downloaded by using package [DownloadSeisData](https://github.com/SeisPiano/DownloadSeisData).
+- The user's local data file is also supported. The first 14 digits of the event file name should preferably be yyyymmddHHMMSS (e.g., 20200520203151).
 
 ### Usage
 
