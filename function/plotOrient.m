@@ -37,7 +37,6 @@ stdOri  = std(xs(ii));  % standard deviation of optimized orientation
 
 figure(1);
 
-subplot(2,1,1)
 plot(data(:,1),data(:,2),'o','MarkerFaceColor','#beb8dc','MarkerEdgeColor','none','MarkerSize',4);
 hold on;
 plot(corrs(ii),xs(ii),'o','MarkerFaceColor','#14517c','MarkerEdgeColor','none','MarkerSize',3);
