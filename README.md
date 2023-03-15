@@ -14,12 +14,12 @@ This package calculate the orientation based on the method of [Stachnik et al. (
 
 ### Usage
 
-**Note:** The quality of seismic data determines the accuracy and error range of the results.
+**Note:** The quality of seismic event data determines the accuracy and error range of the results.
 
-#### Usage 1 (automatic)
+- #### Usage 1 (automatic)
 1. Run `orient`, the script will automatically select the event data and calculate the orientation.
 
-#### Usage 2 (manual)
+- #### Usage 2 (manual)
 1. Run `plot_seismogram`, the script will roughly select the events and plot the waveforms.
 2. Enter the seismogram figure folder and delete the figures with poor quality (select events manually).
 3. Run `orient_select`, the script will calculate the orientation based on the selected events.
@@ -27,11 +27,11 @@ This package calculate the orientation based on the method of [Stachnik et al. (
 
 ### Example results
 
-#### Automatically select events
+- #### Automatically select events
 <div align=center><img src="FIGURES/north.png" width="500"/></div>
 <div align=center><img src="FIGURES/rose.png" width="500"/></div>
 
-#### Manually select events
+- #### Manually select events
 <div align=center><img src="FIGURES/north_select.png" width="500"/></div>
 <div align=center><img src="FIGURES/rose_select.png" width="500"/></div>
 
