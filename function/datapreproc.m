@@ -2,6 +2,7 @@ function preproc_data = datapreproc(raw_data,dt,varargin)
 % Data preprocessing
 % usage: dataout = datapreproc(datain,sampling interval,'filtband',[0.02 0.05],'tap_width',0)
 % usage: dataout = datapreproc(datain,sampling interval,'filtband',[0.01 0.1],'rmean',false,'rtrend',false)
+% perform rmean, rtrend and taper by default
 % tap_width can be 0, then the taper operation will not be executed.
 %
 % Yuechu Wu
