@@ -22,13 +22,14 @@ function [corr, x, corr2, x2] = calcOrient(dataz_hilb,data_n,data_e,baz)
 
 i = 0;
 for ang_temp = 0:10:360
-        rad_temp  = ang_temp * pi / 180;
-        data_r = cos(rad_temp) * data_n + sin(rad_temp) * data_e;
-        i = i + 1;
-        % second normalized cross correlation
-        corrs2_temp(i)  = sum(data_r .* dataz_hilb) / sum(dataz_hilb.^2);        
-%         corrs_temp(i) = sum(data_r .* dataz_hilb) / sqrt(sum(dataz_hilb.^2) * sum(data_r.^2)); % normalized cross correlation
-        angs_temp(i)  = ang_temp;
+    rad_temp  = ang_temp * pi / 180;
+    data_r = cos(rad_temp) * data_n + sin(rad_temp) * data_e;
+    i = i + 1;
+    % second normalized cross correlation, not genuine normalization
+    corrs2_temp(i)  = sum(data_r .* dataz_hilb) / sum(dataz_hilb.^2);
+    % normalized cross correlation
+    % corrs_temp(i) = sum(data_r .* dataz_hilb) / sqrt(sum(dataz_hilb.^2) * sum(data_r.^2));
+    angs_temp(i)  = ang_temp;
 end
 
 [~,ida_temp] = max(corrs2_temp); 
@@ -36,16 +37,14 @@ theta_coarse = angs_temp(ida_temp);
 
 j = 0;
 for ang = theta_coarse - 9 : theta_coarse + 9
-        rad  = ang * pi / 180;
-        data_r = cos(rad) * data_n + sin(rad) * data_e;
-
-        j = j + 1;
-
-        % normalized cross correlation
-        corrs(j) = sum(data_r .* dataz_hilb) / sqrt(sum(dataz_hilb.^2) * sum(data_r.^2)); 
-        % second normalized cross correlation
-        corrs2(j)  = sum(data_r .* dataz_hilb) / sum(dataz_hilb.^2); 
-        angs(j)  = ang;
+    rad  = ang * pi / 180;
+    data_r = cos(rad) * data_n + sin(rad) * data_e;
+    j = j + 1;
+    % normalized cross correlation
+    corrs(j) = sum(data_r .* dataz_hilb) / sqrt(sum(dataz_hilb.^2) * sum(data_r.^2));
+    % second normalized cross correlation
+    corrs2(j)  = sum(data_r .* dataz_hilb) / sum(dataz_hilb.^2);
+    angs(j)  = ang;
 end
 
 [corr,ida] = max(corrs); 
