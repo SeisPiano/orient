@@ -2,10 +2,10 @@ function [corr, x, corr2, x2] = calcOrient(dataz_hilb,data_n,data_e,baz)
 % Calculate the normalized cross correlation and determine the orientation.
 % original version was written by Dr. Ba Manh Le.
 %
-% x     = unknown orientation from the north determined by corr.
+% x     = orientation from the north determined by corr.
 % corr  = normalized cross correlation.
-% x2    = unknown orientation from the north determined by corr2.
-% corr2 = second normalized cross correlation.
+% x2    = orientation from the north determined by corr2.
+% corr2 = second normalization.
 %
 % Reference:
 % J. C. Stachnik, A. F. Sheehan, D. W. Zietlow, Z. Yang, J. Collins, 
@@ -25,7 +25,7 @@ for ang_temp = 0:10:360
     rad_temp  = ang_temp * pi / 180;
     data_r = cos(rad_temp) * data_n + sin(rad_temp) * data_e;
     i = i + 1;
-    % second normalized cross correlation, not genuine normalization
+    % second normalization, not genuine normalization
     corrs2_temp(i)  = sum(data_r .* dataz_hilb) / sum(dataz_hilb.^2);
     % normalized cross correlation
     % corrs_temp(i) = sum(data_r .* dataz_hilb) / sqrt(sum(dataz_hilb.^2) * sum(data_r.^2));
@@ -42,7 +42,7 @@ for ang = theta_coarse - 9 : theta_coarse + 9
     j = j + 1;
     % normalized cross correlation
     corrs(j) = sum(data_r .* dataz_hilb) / sqrt(sum(dataz_hilb.^2) * sum(data_r.^2));
-    % second normalized cross correlation
+    % second normalization
     corrs2(j)  = sum(data_r .* dataz_hilb) / sum(dataz_hilb.^2);
     angs(j)  = ang;
 end
@@ -54,7 +54,7 @@ if x < 0
 end
 
 [corr2, ida2]= max(corrs2); 
-% second normalized cross correlation may < 1
+% second normalization may > 1
 if corr2 > 1
     corr2 = 1 / corr2;
 end
