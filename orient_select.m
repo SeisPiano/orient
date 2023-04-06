@@ -180,7 +180,7 @@ for ista = 1:length(stations) % begin station loop
     end % end overwrite
 
 
-    plotOrient(outfile,mincorr,network,station); % network and station are not necessary
+    plotOrient2(outfile,mincorr,network,station); % network and station are not necessary
 
     figure(1)
     set(gcf,'PaperPositionMode','manual');
