@@ -11,8 +11,14 @@ end
 
 outdata = load(outfile);
 
+% merge corr and x of two normalized cross correlation
+% data = [outdata(:,4:5);outdata(:,6:7)];
+
 % second cross correlation and x2
 data = outdata(:,6:7);
+
+% cross correlation and x2
+% data = [outdata(:,4) outdata(:,7)];
 
 ic = data(:,1) > mincorr;
 xs = data(ic,2); % all effective x
