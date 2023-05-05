@@ -8,6 +8,9 @@ This package calculate the orientation based on the method of [Stachnik et al. (
 
 [`Ba Manh Le`](https://github.com/bamanhle) & [`Yuechu Wu`](https://github.com/SeisPiano)
 
+### Chinese introduction
+[被动源OBS数据处理（3）：确定OBS水平方位角](https://mp.weixin.qq.com/s/KDcqPoe5b0NY-UaKX65WrA)
+
 ### Data
 - Public seismic data can be downloaded by using package [DownloadSeisData](https://github.com/SeisPiano/DownloadSeisData).
 - The user's local data file is also supported. The first 14 digits of the event file name should preferably be yyyymmddHHMMSS (e.g., 20200520203151).
