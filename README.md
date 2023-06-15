@@ -4,6 +4,8 @@ The `orient` is a package written in MATLAB, developed for determining the orien
 
 This package calculate the orientation based on the method of [Stachnik et al. (2012)](https://doi.org/10.1785/0220110128). 
 
+<div align=center><img src="FIGURES/orient.png" width="500"/></div>
+
 ### Authors 
 
 [`Ba Manh Le`](https://github.com/bamanhle) & [`Yuechu Wu`](https://github.com/SeisPiano)
