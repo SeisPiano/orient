@@ -1,13 +1,21 @@
-function filt_data = bpfilt(data,dt,lowfreq,highfreq)
+function filt_data = bpfilt(data,freqmin,freqmax,dt,corners)
 % Bandpass filtering of time series.
-% usage: filt_data = bpfilt(data, sampling interval [s], low frequency [Hz], high frequency [Hz])
+% usage: filt_data = bpfilt(data,low frequency (Hz),high frequency (Hz),sampling interval (s))
 %
 % Yuechu Wu
 % 12131066@mail.sustech.edu.cn
 % 2022-10-08
 
-fn = 1/2/dt;
-[b,a] = butter(2,[lowfreq/fn,highfreq/fn]);
+if nargin == 4
+    corners = 2; 
+end
+
+samprate = 1/dt;		   % sampling frequency
+
+ch1n = 2*freqmin/samprate;
+ch2n = 2*freqmax/samprate;
+
+[b,a] = butter(corners,[ch1n ch2n],'bandpass');
 filt_data = filtfilt(b,a,data);
 
 return
