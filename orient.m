@@ -130,7 +130,7 @@ for ista = 1:length(stations) % begin station loop
             %     continue
             % end
 
-            [otime_z,btime_z,dist,baz,dt] = lh(tr_z,'O','B','DIST','AZ','DELTA');
+            [otime_z,btime_z,dist,baz,dt] = lh(tr_z,'O','B','DIST','BAZ','DELTA');
             [otime_n,btime_n] = lh(tr_n,'O','B');
             [otime_e,btime_e] = lh(tr_e,'O','B');
 
