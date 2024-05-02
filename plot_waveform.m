@@ -100,7 +100,7 @@ for ista = 1:length(stations) % begin station loop
 
         tr_z = rsac(filename_z);
 
-        [otime_z,btime_z,dist,baz,dt] = lh(tr_z,'O','B','DIST','BAZ','DELTA');
+        [otime_z,btime_z,dist,dt] = lh(tr_z,'O','B','DIST','DELTA');
         [gcarc,magnitude] = lh(tr_z,'GCARC','MAG');
         data_z = datapreproc(tr_z(:,2),dt,'filt_band',filt_band,'tap_width',tap_width);
 
