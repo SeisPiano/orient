@@ -1,59 +1,71 @@
-% plot_seismogram
+% plot_waveform
 %
 % Plot three-component seismic waveform with surface wave of Z component 
 % signal-to-noise ratio greater than threshold.
 %
-% The first 14 digits of the event file name should preferably be 
-% yyyymmddHHMMSS.
+% The first 15 digits of the event file name should preferably be 
+% yyyymmdd_HHMMSS.
 %
 % Yuechu Wu
 % 12131066@mail.sustech.edu.cn
 % 2023-03-09
-
+%
+% Update to adapt to the new version of DownloadSeisData
+% Yuechu Wu
 
 
 clear; close all;
 
-addpath ('function'); % path of matlab functions
+addpath ('function');  % path of matlab functions
 
-network = 'XF';     % network name
-stations = {'B01'}; % station names
-ext = 'SAC';        % name of the event file extension
+network = 'XF';      % network name
+stations = {'B01'};  % station names
+ext = 'SAC';         % name of the event file extension
 
-bhz = 'HHZ'; % Z component channel name
-bh1 = 'HH1'; % 1 component channel name
-bh2 = 'HH2'; % 2 component channel name
+channel_z = 'HHZ';  % Z component channel name
+channel_1 = 'HH1';  % 1 component channel name
+channle_2 = 'HH2';  % 2 component channel name
 
-snr_op = 1;  % options for using SNR calculations: (1) sqrt(∑signal^2/∑noise^2)
-%                                                  (2) max(abs(signal)/mean(abs(noise))
-minsnr = 5;  % signal to noise ratio threshold
+snr_op = 1;     % options for using SNR calculations. 1: sqrt(∑signal^2/∑noise^2)
+                %                                     2: max(abs(signal)/mean(abs(noise))
 
-filtband = [0.02 0.05]; % bandpass filter band in Hz
-tap_width = 0.1;        % width in percent of attenuation window
+minsnr = 8;            % signal to noise ratio threshold
 
-INPUTdir  = 'DATA/EVENT';  % directory for data input
-FIGUREdir = 'FIGURES';     % directory for figure output
+filt_band = [0.03, 0.04];  % bandpass filter band in Hz
+tap_width = 0.1;           % width in percent of attenuation window
+velocity = [3, 4.5];       % lower and upper limits of Rayleigh wave velocity
+
+
+INPUTdir  = 'DATA/sacdata_event';  % directory for data input
+FIGUREdir = 'FIGURES';             % directory for figure output
 
 
 
 %%%%% END OF USER INPUT %%%%%
-channels = {bhz,bh1,bh2};
-SELECTdir = sprintf('%s/SEISMOGRAMS/SELECT',FIGUREdir);
+channels = {channel_z,channel_1,channle_2};
+SELECTdir = sprintf('%s/WAVEFORM/SELECT',FIGUREdir);
 
 if ~exist(FIGUREdir,'dir')
     mkdir(FIGUREdir);
 end
+
 if ~exist(SELECTdir,'dir')
     mkdir(SELECTdir);
 end
+
 if ~exist(fullfile(SELECTdir,network),'dir')
     mkdir(fullfile(SELECTdir,network));
 end
 
-filesuff = sprintf('*%s*%s',bhz,ext); % match the Z component event file name
+
+% List the contents of the folder and remove the . and ..
+eventids = setdiff({dir(INPUTdir).name},{'.','..'});
+
 
 for ista = 1:length(stations) % begin station loop
     station = stations{ista};
+    disp(station)
+    close all; clear st
 
     if ~exist(fullfile(SELECTdir,network,station),'dir')
         mkdir(fullfile(SELECTdir,network,station));
@@ -61,32 +73,36 @@ for ista = 1:length(stations) % begin station loop
 
     figoutpath = sprintf('%s/%s/%s',SELECTdir,network,station);
 
-    inpath = sprintf('%s/%s/%s',INPUTdir,network,station);
-    filenames = dir(fullfile(inpath,filesuff));
 
-    for ie = 1:length(filenames)  % begin event loop
+    for ie = 1:length(eventids) % begin event loop
+        close all
+        eventid = eventids{ie};
+        event_otime = sprintf('%s-%s-%sT%s:%s:%s',eventid(1:4),eventid(5:6),eventid(7:8), ...
+                      eventid(10:11),eventid(12:13),eventid(14:15));
+        disp(event_otime); % yyyy-mm-dd HH:MM:SS
 
-        close all; clear traces
 
-        filename_z = sprintf('%s/%s',inpath,filenames(ie).name);
+        % match the Z component event file name
+        file_z = dir(sprintf('%s/%s/*%s*%s*%s',INPUTdir,eventid,station,channel_z,ext));
+        if isempty(file_z)
+            continue
+        end
+        
+        filename_z = sprintf('%s/%s/%s',INPUTdir,eventid,file_z.name);
 
-        eventid = filenames(ie).name(1:14); % yyyymmddHHMMSS
-        event_otime = sprintf('%s-%s-%s %s:%s',eventid(1:4),eventid(5:6),eventid(7:8),eventid(9:10),eventid(11:12));
-        disp(event_otime); % yyyy-mm-dd HH:MM
-
-        filename_1 = strrep(filename_z,bhz,bh1);
-        filename_2 = strrep(filename_z,bhz,bh2);
+        filename_1 = strrep(filename_z,channel_z,channel_1);
+        filename_2 = strrep(filename_z,channel_z,channle_2);
 
         if ~exist(filename_1,'file') || ~exist(filename_2,'file')
             disp('Skipping. At least one horizontal component is missing');
             continue
         end
 
-        rawdata_z = rsac(filename_z);
+        tr_z = rsac(filename_z);
 
-        [otime_z,btime_z,dist,baz,dt] = lh(rawdata_z,'O','B','DIST','BAZ','DELTA');
-        [gcarc,magnitude] = lh(rawdata_z,'GCARC','MAG');
-        data_z = datapreproc(rawdata_z(:,2),dt,'filtband',filtband,'tap_width',tap_width);
+        [otime_z,btime_z,dist,baz,dt] = lh(tr_z,'O','B','DIST','BAZ','DELTA');
+        [gcarc,magnitude] = lh(tr_z,'GCARC','MAG');
+        data_z = datapreproc(tr_z(:,2),dt,'filt_band',filt_band,'tap_width',tap_width);
 
         snr_z = calsnr(data_z,otime_z,btime_z,dist,dt,snr_op);
 
@@ -95,25 +111,26 @@ for ista = 1:length(stations) % begin station loop
             continue
         end
 
-        rawdata_1 = rsac(filename_1);
-        rawdata_2 = rsac(filename_2);
+        tr_1 = rsac(filename_1);
+        tr_2 = rsac(filename_2);
 
-        data_length = [length(rawdata_z(:,2)),length(rawdata_1(:,2)),length(rawdata_2(:,2))];
+        % data_length = [length(tr_z(:,2)),length(tr_n(:,2)),length(tr_e(:,2))];
 
-        if length(unique(data_length))>1
-            disp('Skipping. Different data lengths')
-            continue
-        end
+        % if length(unique(data_length)) > 1
+        %     disp('Skipping. Different data lengths')
+        %     continue
+        % end
 
-        data_1 = datapreproc(rawdata_1(:,2),dt,'filtband',filtband,'tap_width',tap_width);
-        data_2 = datapreproc(rawdata_2(:,2),dt,'filtband',filtband,'tap_width',tap_width);
+        data_1 = datapreproc(tr_1(:,2),dt,'filt_band',filt_band,'tap_width',tap_width);
+        data_2 = datapreproc(tr_2(:,2),dt,'filt_band',filt_band,'tap_width',tap_width);
 
         event_length = length(data_z)*dt;
-        time = transpose(0:dt:event_length-dt);
+        time = transpose(btime_z:dt:event_length+btime_z-dt);
+        signal_window = dist./fliplr(velocity);
 
-        traces(1).data = data_z;
-        traces(2).data = data_1;
-        traces(3).data = data_2;
+        st(1).data = data_z;
+        st(2).data = data_1;
+        st(3).data = data_2;
 
         figure(1)
         set(gcf,'PaperPositionMode','manual');
@@ -123,9 +140,11 @@ for ista = 1:length(stations) % begin station loop
 
         for ic = 1:length(channels)
             subplot(length(channels),1,ic);
-            plot(time,traces(ic).data,'color','#000000','LineWidth',0.5);
+            plot(time,st(ic).data,'color','#000000','LineWidth',0.5);hold on
+            xline(signal_window(1),'color','#FF8C00');
+            xline(signal_window(2),'color','#FF8C00');
             title(channels{ic})
-            xlim([0 event_length])
+            xlim([btime_z event_length+btime_z])
             ylabel('Displacement (m)')
             xlabel('Time (s)')
         end
