@@ -15,7 +15,7 @@ This package calculate the orientation based on the method of [Stachnik et al. (
 
 ### Data
 - Public seismic data can be downloaded by using package [DownloadSeisData](https://github.com/SeisPiano/DownloadSeisData).
-- The user's local data file is also supported. The first 14 digits of the event file name should preferably be yyyymmddHHMMSS (e.g., 20200520203151).
+- The user's local data file is also supported. The first 15 digits of the event file name should preferably be yyyymmdd_HHMMSS (e.g., 20120827_043719).
 
 ### Usage
 
