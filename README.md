@@ -15,7 +15,9 @@ This package calculate the orientation based on the method of [Stachnik et al. (
 
 ### Data
 - Public seismic data can be downloaded by using package [DownloadSeisData](https://github.com/SeisPiano/DownloadSeisData).
-- The user's local data file is also supported. The first 15 digits of the event file name should preferably be yyyymmdd_HHMMSS (e.g., 20120827_043719, represents 2012-08-27T04:37:19).
+- The user's own data file is also supported. The first 15 digits of the event file name should preferably be yyyymmdd_HHMMSS (e.g., 20120827_043719, represents 2012-08-27T04:37:19). The earthquake event data storage path is shown in the figure below.
+
+<div align=center><img src="FIGURES/sacdata_event_path.png" width="650"/></div>
 
 ### Usage
 
@@ -25,8 +27,8 @@ This package calculate the orientation based on the method of [Stachnik et al. (
 1. Run `orient`, the script will automatically select the event data and calculate the orientation.
 
 - #### Usage 2 (manual)
-1. Run `plot_seismogram`, the script will roughly select the events and plot the waveforms.
-2. Enter the seismogram figure folder and delete the figures with poor quality (select events manually).
+1. Run `plot_waveform`, the script will roughly select the events and plot the waveforms.
+2. Enter the waveform figure folder and delete the figures with poor quality (select events manually).
 3. Run `orient_select`, the script will calculate the orientation based on the selected events.
 
 
