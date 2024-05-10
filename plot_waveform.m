@@ -18,6 +18,9 @@ clear; close all;
 
 addpath ('function');  % path of matlab functions
 
+INPUTdir  = 'DATA/sacdata_event';  % directory for data input
+FIGUREdir = 'FIGURES';             % directory for figure output
+
 network = 'XF';      % network name
 stations = {'B01'};  % station names
 ext = 'SAC';         % name of the event file extension
@@ -36,14 +39,12 @@ tap_width = 0.1;           % width in percent of attenuation window
 velocity = [3, 4.5];       % lower and upper limits of Rayleigh wave velocity
 
 
-INPUTdir  = 'DATA/sacdata_event';  % directory for data input
-FIGUREdir = 'FIGURES';             % directory for figure output
 
 
 
 %%%%% END OF USER INPUT %%%%%
 channels = {channel_z,channel_1,channle_2};
-SELECTdir = sprintf('%s/WAVEFORM/SELECT',FIGUREdir);
+SELECTdir = sprintf('%s/waveform/select',FIGUREdir);
 
 if ~exist(FIGUREdir,'dir')
     mkdir(FIGUREdir);
