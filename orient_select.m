@@ -19,6 +19,10 @@ clear; close all;
 
 addpath ('function');  % path of matlab functions
 
+INPUTdir  = 'DATA/sacdata_event';  % directory for event data
+OUTPUTdir = 'DATA/orient';         % directory for data output
+FIGUREdir = 'FIGURES';             % directory for figure output
+
 network = 'XF';      % network name
 stations = {'B01'};  % station names
 ext = 'SAC';         % name of the event file extension
@@ -42,13 +46,12 @@ minsnr = 8;            % signal to noise ratio threshold
 min_similarity = 0.8;  % minimum similar amplitude magnitude
 isoverwrite = 1;       % overwrite output files
 
-INPUTdir = 'DATA/sacdata_event';  % directory for event data
-OUTPUTdir = 'DATA/ORIENT';        % directory for data output
-FIGUREdir = 'FIGURES';            % directory for figure output
+
+
 
 
 %%%%% END OF USER INPUT %%%%%
-SELECTdir = sprintf('%s/SEISMOGRAMS/SELECT',FIGUREdir);
+SELECTdir = sprintf('%s/waveform/select',FIGUREdir);
 
 if ~exist(OUTPUTdir,'dir')
     mkdir(OUTPUTdir);
