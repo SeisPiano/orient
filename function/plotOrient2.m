@@ -23,20 +23,20 @@ data = outdata(:,6:7);
 ic = data(:,1) > mincorr;
 xs = data(ic,2); % all effective x
 corrs = data(ic,1); % all effective corr
-meanOri_coarse = mean(xs); % average value of coarse orientation
+meanOri_rough = mean(xs); % average value of rough orientation
 
 % To avoid the situation of mean([0 360])=180
 for j = 1:10
-    i1 = find(xs > meanOri_coarse+180);
+    i1 = find(xs > meanOri_rough+180);
     xs(i1) = xs(i1) - 360;
-    i2 = find(xs < meanOri_coarse-180);
+    i2 = find(xs < meanOri_rough-180);
     xs(i2) = xs(i2) + 360;
-    meanOri_coarse = mean(xs);
+    meanOri_rough = mean(xs);
 end
 
-stdOri_coarse = std(xs); % standard deviation of coarse orientation
+stdOri_rough = std(xs); % standard deviation of rough orientation
 
-ii = find(xs < meanOri_coarse+stdOri_coarse & xs > meanOri_coarse-stdOri_coarse);
+ii = find(xs < meanOri_rough+stdOri_rough & xs > meanOri_rough-stdOri_rough);
 meanOri = mean(xs(ii)); % average value of optimized orientation
 stdOri  = std(xs(ii));  % standard deviation of optimized orientation
 
@@ -47,12 +47,12 @@ hold on;
 plot(corrs(ii),xs(ii),'o','MarkerFaceColor','#14517c','MarkerEdgeColor','none','MarkerSize',3);
 
 % plot([mincorr mincorr],[0 360],'r','Linewidth',1.5);
-plot([mincorr mincorr],[meanOri_coarse-180 meanOri_coarse+180],'Color','#d8383a','Linewidth',1.5);
+plot([mincorr mincorr],[meanOri_rough-180 meanOri_rough+180],'Color','#d8383a','Linewidth',1.5);
 legend({'All','Used',''},'Location','northwest');
 title([network,' ',station,' Orientation = ',num2str(meanOri,'%.1f'),'  std = ',num2str(stdOri,'%.1f')])
 
 set(gca,'FontSize',10,'XTick',0:0.2:1);
-set(gca,'xlim',[0 1], 'ylim',[meanOri_coarse-180 meanOri_coarse+180]);
+set(gca,'xlim',[0 1], 'ylim',[meanOri_rough-180 meanOri_rough+180]);
 % set(gca,'xlim',[0 1], 'ylim',[0 360],'YTick',0:30:360);
 
 
