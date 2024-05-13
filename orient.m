@@ -42,9 +42,9 @@ ext = 'SAC';         % name of the event file extension
 
 % If you don't know which horizontal channel corresponds to the N component,
 % try it. Only the correct channels can get reasonable results.
-channel_z = 'HHZ';  %  Z  component channel name
-channel_n = 'HH2';  % nominal N component channel name
-channel_e = 'HH1';  % nominal E component channel name
+channel_z = 'HZ';  %  Z  component channel name
+channel_n = 'H2';  % nominal N component channel name
+channel_e = 'H1';  % nominal E component channel name
 
 bpass = [0.015, 0.025, 0.035, 0.045];  % frequency used to calculate
 dbp = 0.005;           % the band for each frequency bpass +/- dbp
