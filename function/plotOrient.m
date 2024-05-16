@@ -44,7 +44,7 @@ plot(corrs(ii),xs(ii),'o','MarkerFaceColor','#14517c','MarkerEdgeColor','none','
 % plot([mincorr mincorr],[0 360],'r','Linewidth',1.5);
 plot([mincorr mincorr],[meanOri_rough-180 meanOri_rough+180],'Color','#d8383a','Linewidth',1.5);
 legend({'All','Used',''},'Location','northwest');
-title([network,' ',station,' Orientation = ',num2str(meanOri,'%.1f'),'  std = ',num2str(stdOri,'%.1f')])
+title([network,' ',station,' mean = ',num2str(meanOri,'%.1f'),'  std = ',num2str(stdOri,'%.1f')])
 
 set(gca,'FontSize',10,'XTick',0:0.2:1);
 set(gca,'xlim',[0 1], 'ylim',[meanOri_rough-180 meanOri_rough+180]);
