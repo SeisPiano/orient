@@ -201,7 +201,7 @@ for ista = 1:length(stations) % begin station loop
     set(gcf,'PaperOrientation','portrait');
     set(gcf,'PaperPosition',[.05 1.5 8 4]);
     xlabel('Correlation');
-    ylabel('Degrees from N'); % Degrees from the direction of N component
+    ylabel('Orientation');
     pdffile1 = sprintf('%s/%s_%s_north_select.pdf',figoutpath,network,station);
     print('-dpdf',pdffile1);
 
