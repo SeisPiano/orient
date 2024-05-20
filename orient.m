@@ -89,12 +89,13 @@ eventids = setdiff({dir(INPUTdir).name},{'.','..'});
 for ista = 1:length(stations) % begin station loop
     station = stations{ista};
     disp(station);
+    close all; 
 
     outfile = sprintf('%s/%s/%s_%s_orient.txt',OUTPUTdir,network,network,station);
 
     if ~exist(outfile,'file') || isoverwrite
 
-        close all; clear outdata iee;
+        clear outdata iee;
 
         iee = 0; % effective event
 
