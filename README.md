@@ -45,7 +45,8 @@ This package calculate the orientation based on the method of [Stachnik et al. (
 ### Cite
 
 If you use `orient` in your work, please cite:
-Liu Dan, Ting Yang, Ba Manh Le, Yuechu Wu, Yizhi Wang, Xinfeng Huang, Haoran Du, Jian Wang, Yongshun Chen. (2022). Seismometer-detached broadband ocean bottom seismograph (OBS): development, test, and data quality analysis. Chinese Journal of Geophysics, 65(7): 2560-2572, https://doi.org/10.6038/cjg2022P0441
+
+Yuechu Wu, Ting Yang, Min Xu, Dan Liu, Yizhi Wang, Chuanhai Yu, Mei Xue, Weiwei Ding, Baohua Liu. (2024). A passive‐source ocean‐bottom seismic experiment in the South China Sea: Evaluations of data quality and instrument performance. Seismological Research Letters, [https://doi.org/10.1785/0220240224](https://doi.org/10.1785/0220240224)
 
 ### References
 
